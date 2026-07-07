@@ -1,19 +1,22 @@
 import { useState, useEffect } from "react";
 import { NavLink, Link, useNavigate, useLocation } from "react-router-dom";
 import "../App.css";
+import { useCart } from "./Cart";
 
 function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isCartOpen, setIsCartOpen] = useState(false);
 
   const navigate = useNavigate();
   const location = useLocation();
+  const { cartItems, cartCount, cartTotal, removeFromCart, updateQuantity } = useCart();
 
   const navItems = [
     { path: "/", label: "Main" },
     { path: "/#new-collection", label: "Watches", targetId: "new-collection" },
-    { path: "/#info-sections", label: "About", targetId: "info-sections" }, 
-    { path: "/#ContactCards", label: "Contact", targetId: "contact-cards" }, 
+    { path: "/#info-sections", label: "About", targetId: "info-sections" },
+    { path: "/#ContactCards", label: "Contact", targetId: "contact-cards" },
   ];
 
   useEffect(() => {
@@ -23,10 +26,16 @@ function Header() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  useEffect(() => {
+    const handleCartUpdated = () => setIsCartOpen(true);
+    window.addEventListener("cart:updated", handleCartUpdated);
+    return () => window.removeEventListener("cart:updated", handleCartUpdated);
+  }, []);
+
   const handleNavClick = (e, item) => {
     if (item.targetId) {
-      e.preventDefault(); 
-      setIsMenuOpen(false); 
+      e.preventDefault();
+      setIsMenuOpen(false);
 
       if (location.pathname === "/") {
         const element = document.getElementById(item.targetId);
@@ -47,9 +56,7 @@ function Header() {
       const id = location.hash.replace("#", "");
       const element = document.getElementById(id);
       if (element) {
-
         setTimeout(() => {
-
           element.scrollIntoView({ behavior: "smooth" });
         }, 100);
       }
@@ -59,10 +66,9 @@ function Header() {
   return (
     <header className={`app-header ${isScrolled ? "scrolled" : "transparent"}`}>
       <div className="header-container">
-        
-        <Link 
-          to="/" 
-          className="logo-btn" 
+        <Link
+          to="/"
+          className="logo-btn"
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
         >
           <span className="logo-text">WATCH.GE</span>
@@ -72,12 +78,10 @@ function Header() {
         <nav className="desktop-nav">
           {navItems.map((item) => (
             <NavLink
-            
               key={item.path}
               to={item.path}
               className={({ isActive }) => {
                 if (item.targetId) {
-
                   return location.hash === `#${item.targetId}` ? "nav-link active" : "nav-link";
                 }
                 return isActive && location.hash === "" ? "nav-link active" : "nav-link";
@@ -90,25 +94,78 @@ function Header() {
         </nav>
 
         <div className="header-actions">
-
           <a href="tel:599999999" className="phone-link">
-            599 99 99 99
+            <span className="phone-number">599 99 99 99</span>
           </a>
-          
+
+          <button
+            className="cart-toggle-btn"
+            onClick={() => setIsCartOpen((prev) => !prev)}
+            aria-label="Toggle cart"
+          >
+            <span className="cart-icon">🛍</span>
+            <span className="cart-count">{cartCount}</span>
+          </button>
+
           <Link to="/register" className="register-nav-btn">
             REGISTER
           </Link>
 
           <button className="appoint-btn">BOOK VIEWING</button>
-          
-          <button 
-            className={`menu-toggle ${isMenuOpen ? "open" : ""}`} 
+
+          <button
+            className={`menu-toggle ${isMenuOpen ? "open" : ""}`}
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             aria-label="Toggle menu"
-          >
-          </button>
+          ></button>
         </div>
 
+        {isCartOpen && (
+          <div className="cart-dropdown">
+            <div className="cart-dropdown-header">
+              <h3>Your Cart</h3>
+              <button className="cart-close-btn" onClick={() => setIsCartOpen(false)}>
+                ×
+              </button>
+            </div>
+
+            {cartItems.length === 0 ? (
+              <p className="cart-empty">Your cart is empty.</p>
+            ) : (
+              <>
+                <ul className="cart-items-list">
+                  {cartItems.map((item) => (
+                    <li key={item.id} className="cart-item">
+                      <div>
+                        <p className="cart-item-name">{item.name}</p>
+                        <p className="cart-item-meta">{item.tag}</p>
+                        <p className="cart-item-meta">
+                          ${item.price.toFixed(2)} × {item.quantity}
+                        </p>
+                      </div>
+                      <div className="cart-item-actions">
+                        <button className="cart-quantity-btn" onClick={() => updateQuantity(item.id, -1)}>
+                          −
+                        </button>
+                        <span>{item.quantity}</span>
+                        <button className="cart-quantity-btn" onClick={() => updateQuantity(item.id, 1)}>
+                          +
+                        </button>
+                        <button className="cart-remove-btn" onClick={() => removeFromCart(item.id)}>
+                          Remove
+                        </button>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+                <div className="cart-dropdown-footer">
+                  <span>Total</span>
+                  <strong>${cartTotal.toFixed(2)}</strong>
+                </div>
+              </>
+            )}
+          </div>
+        )}
       </div>
 
       {isMenuOpen && (
@@ -124,9 +181,9 @@ function Header() {
                 {item.label}
               </NavLink>
             ))}
-            
-            <Link 
-              to="/register" 
+
+            <Link
+              to="/register"
               className="mobile-nav-link register-mobile-link"
               onClick={() => setIsMenuOpen(false)}
             >
