@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
 import { NavLink, Link, useNavigate, useLocation } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 import "../App.css";
 import { useCart } from "./Cart";
 
 function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
 
   const navigate = useNavigate();
@@ -34,23 +35,21 @@ function Header() {
 
   const handleNavClick = (e, item) => {
     if (item.targetId) {
-      e.preventDefault();
-      setIsMenuOpen(false);
+        e.preventDefault();
 
-      if (location.pathname === "/") {
-        const element = document.getElementById(item.targetId);
-        if (element) {
-          element.scrollIntoView({ behavior: "smooth" });
+        if (location.pathname === "/") {
+          const element = document.getElementById(item.targetId);
+          if (element) {
+            element.scrollIntoView({ behavior: "smooth" });
+          }
+          window.history.pushState(null, "", item.path);
+        } else {
+          navigate(item.path);
         }
-        window.history.pushState(null, "", item.path);
       } else {
         navigate(item.path);
       }
-    } else {
-      setIsMenuOpen(false);
-    }
-  };
-
+    };
   useEffect(() => {
     if (location.hash) {
       const id = location.hash.replace("#", "");
@@ -103,7 +102,7 @@ function Header() {
             onClick={() => setIsCartOpen((prev) => !prev)}
             aria-label="Toggle cart"
           >
-            <span className="cart-icon">🛍</span>
+            <FontAwesomeIcon icon={faShoppingCart} />
             <span className="cart-count">{cartCount}</span>
           </button>
 
@@ -112,86 +111,53 @@ function Header() {
           </Link>
 
           <button className="appoint-btn">BOOK VIEWING</button>
-
-          <button
-            className={`menu-toggle ${isMenuOpen ? "open" : ""}`}
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            aria-label="Toggle menu"
-          ></button>
         </div>
-
-        {isCartOpen && (
-          <div className="cart-dropdown">
-            <div className="cart-dropdown-header">
-              <h3>Your Cart</h3>
-              <button className="cart-close-btn" onClick={() => setIsCartOpen(false)}>
-                ×
-              </button>
-            </div>
-
-            {cartItems.length === 0 ? (
-              <p className="cart-empty">Your cart is empty.</p>
-            ) : (
-              <>
-                <ul className="cart-items-list">
-                  {cartItems.map((item) => (
-                    <li key={item.id} className="cart-item">
-                      <div>
-                        <p className="cart-item-name">{item.name}</p>
-                        <p className="cart-item-meta">{item.tag}</p>
-                        <p className="cart-item-meta">
-                          ${item.price.toFixed(2)} × {item.quantity}
-                        </p>
-                      </div>
-                      <div className="cart-item-actions">
-                        <button className="cart-quantity-btn" onClick={() => updateQuantity(item.id, -1)}>
-                          −
-                        </button>
-                        <span>{item.quantity}</span>
-                        <button className="cart-quantity-btn" onClick={() => updateQuantity(item.id, 1)}>
-                          +
-                        </button>
-                        <button className="cart-remove-btn" onClick={() => removeFromCart(item.id)}>
-                          Remove
-                        </button>
-                      </div>
-                    </li>
-                  ))}
-                </ul>
-                <div className="cart-dropdown-footer">
-                  <span>Total</span>
-                  <strong>${cartTotal.toFixed(2)}</strong>
-                </div>
-              </>
-            )}
-          </div>
-        )}
       </div>
 
-      {isMenuOpen && (
-        <div className="mobile-drawer">
-          <nav className="mobile-nav">
-            {navItems.map((item) => (
-              <NavLink
-                key={item.path}
-                to={item.path}
-                className="mobile-nav-link"
-                onClick={(e) => handleNavClick(e, item)}
-              >
-                {item.label}
-              </NavLink>
-            ))}
+      {isCartOpen && (
+        <div className="cart-dropdown">
+          <div className="cart-dropdown-header">
+            <h3>Your Cart</h3>
+            <button className="cart-close-btn" onClick={() => setIsCartOpen(false)}>
+              ×
+            </button>
+          </div>
 
-            <Link
-              to="/register"
-              className="mobile-nav-link register-mobile-link"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Register / Sign Up
-            </Link>
-          </nav>
-          <div className="drawer-divider"></div>
-          <button className="mobile-appoint-btn">BOOK VIEWING</button>
+          {cartItems.length === 0 ? (
+            <p className="cart-empty">Your cart is empty.</p>
+          ) : (
+            <>
+              <ul className="cart-items-list">
+                {cartItems.map((item) => (
+                  <li key={item.id} className="cart-item">
+                    <div>
+                      <p className="cart-item-name">{item.name}</p>
+                      <p className="cart-item-meta">{item.tag}</p>
+                      <p className="cart-item-meta">
+                        ${item.price.toFixed(2)} × {item.quantity}
+                      </p>
+                    </div>
+                    <div className="cart-item-actions">
+                      <button className="cart-quantity-btn" onClick={() => updateQuantity(item.id, -1)}>
+                        −
+                      </button>
+                      <span>{item.quantity}</span>
+                      <button className="cart-quantity-btn" onClick={() => updateQuantity(item.id, 1)}>
+                        +
+                      </button>
+                      <button className="cart-remove-btn" onClick={() => removeFromCart(item.id)}>
+                        Remove
+                      </button>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+              <div className="cart-dropdown-footer">
+                <span>Total</span>
+                <strong>${cartTotal.toFixed(2)}</strong>
+              </div>
+            </>
+          )}
         </div>
       )}
     </header>
