@@ -15,7 +15,7 @@ function Header() {
 
   const navItems = [
     { path: "/", label: "Main" },
-    { path: "/#new-collection", label: "Watches", targetId: "new-collection" },
+    { path: "/watches", label: "Watches" },
     { path: "/#info-sections", label: "About", targetId: "info-sections" },
     { path: "/#ContactCards", label: "Contact", targetId: "contact-cards" },
   ];

@@ -36,6 +36,18 @@ function NewCollection() {
 
   return (
     <section id="new-collection" className="collection-section">
+      <div className="hero-top-buttons">
+        <div className="hero-top-content">
+          <p className="hero-subtitle">DISCOVER EXCLUSIVE WATCHES</p>
+          <h2>Elevate Your Style With Timeless Luxury</h2>
+        </div>
+        <div className="hero-button-group">
+          <button className="hero-btn primary">Explore Collection</button>
+          <button className="hero-btn secondary">Best Sellers</button>
+          <button className="hero-btn tertiary">New Arrivals</button>
+        </div>
+      </div>
+
       <div className="collection-header">
         <h2>NEW COLLECTION</h2>
         <span className="see-all">See All</span>

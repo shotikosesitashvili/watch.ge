@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import PromoBanner from "../Components/PromoBanner";
 import InfoSections from "../Components/InfoSections";
 import ContactCards from "../Components/ContactCards";
@@ -45,6 +45,7 @@ function Home() {
       <section id="new-collection" className="collection-section">
         <div className="collection-header">
           <h2>EXQUISITE TIMEPIECES</h2>
+          <Link to="/watches" className="see-all">See All</Link>
         </div>
         <div className="products-grid">
           {watches.map((watch) => (
