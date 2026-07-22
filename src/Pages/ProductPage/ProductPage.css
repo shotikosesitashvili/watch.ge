@@ -1,0 +1,28 @@
+.product-page {
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 20px;
+}
+
+.product-container {
+  display: flex;
+  gap: 40px;
+}
+
+.product-image img {
+  width: 100%;
+  max-width: 450px;
+}
+
+.product-info {
+  flex: 1;
+}
+
+.product-price {
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.buy-btn {
+  margin-top: 20px;
+}

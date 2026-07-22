@@ -7,7 +7,6 @@ import {
   faLinkedinIn, 
   faYoutube 
 } from "@fortawesome/free-brands-svg-icons"; 
-import '../App.css';
 
 function Footer() {
   const handleSubmit = (e) => {

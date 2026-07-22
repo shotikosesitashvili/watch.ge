@@ -1,16 +1,21 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+
 import { AuthProvider } from "./context/AuthContext";
-import Header from "./Components/Header";
-import Footer from "./Components/Footer";
-import { Cookies } from "./Components/Cookies";
-import Home from "./Pages/Home";
-import Registration from "./Pages/Registration";
-import ProductPage from "./Pages/ProductPage";
-import Watches from "./Pages/Watches";
-import { CartProvider } from "./Components/Cart";
+import { CartProvider } from "./Components/Cart/Cart";
+
+import Header from "./Components/Header/Header";
+import Footer from "./Components/Footer/Footer";
+import { Cookies } from "./Components/Cookies/Cookies";
+
+import Home from "./Pages/Home/Home";
+import Watches from "./Pages/Watches/Watches";
+import Registration from "./Pages/Registration/Registration";
+import ProductPage from "./Pages/ProductPage/ProductPage";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowUp } from "@fortawesome/free-solid-svg-icons";
+
 import "./App.css";
 
 function App() {
@@ -22,12 +27,17 @@ function App() {
     };
 
     window.addEventListener("scroll", handleScroll);
-    handleScroll();
-    return () => window.removeEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
   }, []);
 
   const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
   };
 
   return (
@@ -35,17 +45,19 @@ function App() {
       <CartProvider>
         <Router>
           <Header />
+
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/watches" element={<Watches />} />
             <Route path="/register" element={<Registration />} />
             <Route path="/product/:id" element={<ProductPage />} />
           </Routes>
+
           <Footer />
           <Cookies />
+
           <button
-            type="button"
-            className={`scroll-up-btn ${showScrollUp ? "visible" : "hidden"}`}
+            className={`scroll-up-btn ${showScrollUp ? "visible" : ""}`}
             onClick={scrollToTop}
             aria-label="Scroll to top"
           >

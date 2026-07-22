@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import PromoBanner from "../Components/PromoBanner";
-import InfoSections from "../Components/InfoSections";
-import ContactCards from "../Components/ContactCards";
+import PromoBanner from "../../Components/PromoBanner";
+import InfoSections from "../../Components/InfoSections";
+import ContactCards from "../../Components/ContactCards";
 
 function Home() {
   const [watches, setWatches] = useState([]);

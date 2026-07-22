@@ -1,0 +1,221 @@
+
+}
+body {
+  background-color: var(--bg-black);
+  color: var(--text-white);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+.page-padding-top {
+  padding-top: 140px !important;
+  min-height: 80vh;
+  background-color: #000000;
+  box-sizing: border-box;
+}
+
+
+.app-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 50;
+  transition: all 0.5s ease;
+}
+
+.app-header.transparent {
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.9), transparent);
+  padding: var(--header-padding) 0;
+}
+
+.app-header.scrolled {
+  background: rgba(14, 14, 14, 0.95);
+  backdrop-filter: blur(8px);
+  padding: var(--header-padding-scroll) 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.5);
+}
+
+.header-container {
+  max-width: var(--container-width);
+  margin: 0 auto;
+  padding: 0 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+}
+
+
+.logo-btn {
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+}
+
+.logo-text {
+  color: var(--text-white);
+  font-size: var(--font-logo);
+  font-weight: 700;
+  letter-spacing: 4px;
+}
+
+.logo-subtext {
+  color: var(--brand-red);
+  font-size: var(--font-subtext);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-top: 2px;
+}
+
+
+.desktop-nav {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+}
+
+.nav-link {
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: var(--font-nav);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  transition: var(--transition);
+  font-weight: 600;
+}
+
+.nav-link:hover {
+  color: var(--text-white);
+}
+
+.nav-link.active {
+  color: var(--brand-red);
+  border-bottom: 1px solid var(--brand-red);
+  padding-bottom: 4px;
+}
+
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.phone-link {
+  text-decoration: none;
+  color: rgba(255, 255, 255, 0.8);
+  transition: var(--transition);
+}
+
+.phone-link:hover {
+  color: var(--text-white);
+}
+
+.phone-number {
+  font-size: var(--font-phone);
+  letter-spacing: 1px;
+  font-weight: 600;
+}
+
+.register-nav-btn {
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  padding: 8px 16px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+.register-nav-btn:hover {
+  color: #ff1d3f;
+  border-color: #ff1d3f;
+  background-color: rgba(255, 29, 63, 0.05);
+}
+
+.appoint-btn {
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--text-white);
+  padding: 10px 20px;
+  border-radius: var(--radius-sm);
+  font-size: var(--font-btn);
+  text-transform: uppercase;
+  cursor: pointer;
+  letter-spacing: 1px;
+  transition: var(--transition);
+}
+
+.appoint-btn:hover {
+  border-color: var(--brand-red);
+  color: var(--brand-red);
+  background: rgba(255, 29, 63, 0.05);
+}
+
+.cart-toggle-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--text-white);
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.cart-toggle-btn:hover {
+  border-color: var(--brand-red);
+  color: var(--brand-red);
+}
+
+.cart-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 22px;
+  height: 22px;
+  border-radius: 999px;
+  background: var(--brand-red);
+  color: var(--text-white);
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.scroll-up-btn {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  width: 46px;
+  height: 46px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--brand-red);
+  color: #ffffff;
+  border: none;
+  border-radius: 50%;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.35);
+  cursor: pointer;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+  transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s ease;
+  z-index: 100;
+}
+
+.scroll-up-btn.visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.scroll-up-btn.hidden {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+}
