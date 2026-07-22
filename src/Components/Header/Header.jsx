@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { NavLink, Link, useNavigate, useLocation } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
-import { useCart } from "../Cart";
+import { useCart } from "../Cart/Cart";
 
 function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
