@@ -1,7 +1,7 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useCart } from "../../Components/Cart/Cart";
+import { useCart } from "../../Components/Cart";
 
 function ProductPage() {
   const location = useLocation();
