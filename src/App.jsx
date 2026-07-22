@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import { AuthProvider } from "./context/AuthContext";
-import { CartProvider } from "./Components/Cart/Cart";
+import { CartProvider } from "./Components/Cart";
 
 import Header from "./Components/Header/Header";
 import Footer from "./Components/Footer/Footer";
